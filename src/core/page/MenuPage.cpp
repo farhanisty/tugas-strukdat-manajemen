@@ -6,7 +6,12 @@
 #include "iostream"
 #include "string"
 
-using Core::Input::InputBuilder, Core::Constraint::MustIntegerConstraint;
+using Core::Input::InputBuilder, Core::Constraint::MustIntegerConstraint,
+    Core::Page::MenuPage;
+
+bool MenuPage::getIsStop() { return this->isStop; }
+void MenuPage::setIsStop(bool isStop) { this->isStop = isStop; }
+void MenuPage::setStop() { this->setIsStop(true); }
 
 void Core::Page::MenuPage::addMenu(std::string label, Page *page) {
   this->pageItems.push_back(new PageItem(label, page));
