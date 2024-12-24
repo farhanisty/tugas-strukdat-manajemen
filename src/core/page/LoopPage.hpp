@@ -2,14 +2,15 @@
 #define Core_Page_LoopPage_HPP
 
 #include "CanLoopPage.hpp"
+#include "MenuPage.hpp"
 #include "Page.hpp"
 
 namespace Core::Page {
 class LoopPage : public Page {
-  CanLoopPage *page = nullptr;
+  MenuPage *page = nullptr;
 
 public:
-  LoopPage(CanLoopPage *page);
+  LoopPage(MenuPage *page);
   void execute();
 };
 } // namespace Core::Page
