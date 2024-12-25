@@ -18,7 +18,7 @@ public:
   void clearScreen() {
 #if __unix__
     system("clear");
-#elif
+#else
     system("cls");
 #endif
   }
