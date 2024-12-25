@@ -11,6 +11,8 @@ public:
   bool getIsStop();
   void setIsStop(bool isStop);
   void setStop();
+
+  virtual ~CanLoopPage() {}
 };
 } // namespace Core::Page
 
