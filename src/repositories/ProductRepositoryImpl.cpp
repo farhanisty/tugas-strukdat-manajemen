@@ -11,3 +11,10 @@ bool ProductRepositoryImpl::insert(Entity::Product *product) {
 std::vector<Entity::Product *> ProductRepositoryImpl::getAll() {
   return this->products;
 }
+
+Entity::Product *ProductRepositoryImpl::getByCode(string code) {
+  return nullptr;
+}
+std::vector<Entity::Product *> ProductRepositoryImpl::getByName(string name) {
+  return this->products;
+}

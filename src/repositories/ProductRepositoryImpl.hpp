@@ -9,6 +9,8 @@ class ProductRepositoryImpl : public ProductRepository {
 public:
   bool insert(Entity::Product *) override;
   std::vector<Entity::Product *> getAll() override;
+  Entity::Product *getByCode(string code) override;
+  std::vector<Entity::Product *> getByName(string name) override;
 };
 } // namespace Repositories
 
