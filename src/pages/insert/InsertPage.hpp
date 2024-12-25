@@ -1,15 +1,13 @@
 #ifndef Pages_InsertPage_HPP
 #define Pages_InsertPage_HPP
 
-#include "../../core/page/MenuPage.hpp"
+#include "../../core/page/Page.hpp"
 
 namespace Pages::Insert {
 
-class InsertPage : public Core::Page::MenuPage {
+class InsertPage : public Core::Page::Page {
 public:
-  void configureMenu() override;
-
-  void before() override;
+  void execute() override;
 };
 
 } // namespace Pages::Insert

@@ -1,26 +1,13 @@
-#include "core/page/MenuPage.hpp"
-#include "core/page/Page.hpp"
+#include "core/page/LoopPage.hpp"
+#include "pages/MainPage.hpp"
 #include <iostream>
 
-using namespace std;
-
-class MainPage : public Core::Page::MenuPage {
-public:
-  void execute() override {
-    cout << "Selamat Datang di Pusat pembelanjaan\n";
-
-    // Menambahkan menu
-    this->addMenu("Lihat Buku", this);
-
-    // Menampilan opsi
-    Core::Page::MenuPage::execute();
-    cout << this->getInput();
-  }
-};
-
 int main() {
-  MainPage mainPage;
+  Pages::MainPage *mainPage = new Pages::MainPage();
+  Core::Page::LoopPage *loopPage = new Core::Page::LoopPage(mainPage);
 
-  mainPage.execute();
+  loopPage->execute();
+
+  delete loopPage;
   return 0;
 }
