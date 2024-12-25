@@ -5,47 +5,51 @@
 #include "../../entity/Product.hpp"
 #include "../util/PausePage.hpp"
 #include <iomanip>
+#include <iostream>
 #include <string>
 
-using Pages::Insert::InsertPage, std::cout, std::setw, std::setfill,
+using Pages::Insert::InsertPage, std::cout, std::endl, std::setw, std::setfill,
     Core::Input::Input, Core::Input::InputBuilder, Entity::Product;
 
 void InsertPage::execute() {
-  this->clearScreen();
+    this->clearScreen();
 
-  auto productRepository =
-      Repositories::ProductRepositoryFactory::getInstance();
+    auto productRepository = Repositories::ProductRepositoryFactory::getInstance();
+    InputBuilder inputBuilder;
 
-  InputBuilder inputBuilder;
+    cout << "╔════════════════════════════════════╗" << endl;
+    cout << "║                                    ║" << endl;
+    cout << "║            INPUT PRODUK            ║" << endl;
+    cout << "║                                    ║" << endl;
+    cout << "╚════════════════════════════════════╝" << endl;
 
-  cout << setw(1) << setfill('+') << "+";
-  cout << setw(48) << setfill('=') << "";
-  cout << setw(2) << setfill('+') << "+\n";
-  cout << setw(1) << setfill('|') << "";
-  cout << setw(19) << setfill(' ') << "";
-  cout << "HELLO WORLD";
-  cout << setw(18) << setfill(' ') << "";
-  cout << setw(2) << setfill('|') << "|\n";
-  cout << setw(1) << setfill('+') << "";
-  cout << setw(48) << setfill('=') << "";
-  cout << setw(2) << setfill('+') << "+\n";
+    Input *inputCode = inputBuilder.setPrefix("\nInput Code Produk\t: ")->build();
+    inputBuilder.fresh();
+    Input *inputName = inputBuilder.setPrefix("Input Nama Produk\t: ")->build();
+    inputBuilder.fresh();
+    Input *inputPrice = inputBuilder.setPrefix("Input Harga Produk\t: ")->build();
 
-  Input *inputCode = inputBuilder.setPrefix("\nInput code\t: ")->build();
-  inputBuilder.fresh();
-  Input *inputName = inputBuilder.setPrefix("Input name\t: ")->build();
-  inputBuilder.fresh();
-  Input *inputPrice = inputBuilder.setPrefix("Input price\t: ")->build();
+    try {
+        inputCode->execute();
+        inputName->execute();
+        inputPrice->execute();
 
-  inputCode->execute();
-  inputName->execute();
-  inputPrice->execute();
+        float price = std::stof(inputPrice->getRawInput());
 
-  productRepository->insert(
-      new Product({inputCode->getRawInput(), inputName->getRawInput(),
-                   std::stof(inputPrice->getRawInput())}));
+        productRepository->insert(
+            new Product({inputCode->getRawInput(), inputName->getRawInput(), price}));
 
-  cout << "\nProduk berhasil di tambah\n";
+        cout << "\n[SUKSES] Produk berhasil ditambahkan\n";
+    } catch (const std::invalid_argument &e) {
+        cout << "\n[ERROR] Input harga tidak valid. Harap masukkan angka yang benar.\n";
+    } catch (const std::out_of_range &e) {
+        cout << "\n[ERROR] Harga produk terlalu besar untuk diproses.\n";
+    } catch (const std::exception &e) {
+        cout << "\n[ERROR] Terjadi kesalahan: " << e.what() << endl;
+    }
 
-  this->renderPageDirectly(new Util::PausePage());
-  delete inputCode;
+    this->renderPageDirectly(new Util::PausePage());
+    delete inputCode;
+    delete inputName;
+    delete inputPrice;
 }
