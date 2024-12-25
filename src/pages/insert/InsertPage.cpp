@@ -2,13 +2,13 @@
 #include "../../core/input/Input.hpp"
 #include "../../core/input/InputBuilder.hpp"
 #include "../../repositories/ProductRepositoryFactory.hpp"
-#include "../../state/ProductState.hpp"
+#include "../../entity/Product.hpp"
 #include "../util/PausePage.hpp"
 #include <iomanip>
 #include <string>
 
 using Pages::Insert::InsertPage, std::cout, std::setw, std::setfill,
-    Core::Input::Input, Core::Input::InputBuilder;
+    Core::Input::Input, Core::Input::InputBuilder, Entity::Product;
 
 void InsertPage::execute() {
   this->clearScreen();
