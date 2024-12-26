@@ -51,7 +51,7 @@ void InsertPage::execute() {
 
   cout << "\n[SUKSES] Produk berhasil ditambahkan\n";
 
-  this->renderPageDirectly(new Util::PausePage());
+  this->renderPageDirectly(std::make_shared<Util::PausePage>());
   delete inputCode;
   delete inputName;
   delete inputPrice;
