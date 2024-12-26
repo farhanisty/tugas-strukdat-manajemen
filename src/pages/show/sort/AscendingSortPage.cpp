@@ -1,18 +1,16 @@
-#include "ShowPage.hpp"
-#include "../../core/page/ExitPage.hpp"
-#include "../../custom/renderer/ModernMenuRenderer.hpp"
-#include "../../repositories/ProductRepositoryFactory.hpp"
-#include "../util/PausePage.hpp"
-#include "../util/ShowProductPage.hpp"
-#include "AdvanceOptionShowPage.hpp"
-#include <iomanip>
+#include "AscendingSortPage.hpp"
+#include "../../../custom/renderer/ModernMenuRenderer.hpp"
+#include "../../../repositories/ProductRepositoryFactory.hpp"
+#include "../../util/ShowProductPage.hpp"
+#include "../AdvanceOptionShowPage.hpp"
 #include <iostream>
-#include <vector>
 
-using Pages::Show::ShowPage, std::cout, Pages::Util::PausePage;
+using Pages::Show::Sort::AscendingSortPage;
 
-void ShowPage::execute() {
+void AscendingSortPage::execute() {
   this->clearScreen();
+  std::cout << "LIST PRODUK TERURUT SECARA ASCENDING\n";
+
   auto productRepository =
       Repositories::ProductRepositoryFactory::getInstance();
 
