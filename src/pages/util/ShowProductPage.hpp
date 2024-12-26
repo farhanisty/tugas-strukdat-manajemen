@@ -7,6 +7,7 @@
 
 namespace Pages::Util {
 class ShowProductPage : public Core::Page::Page {
+  std::vector<Entity::Product*> products;
 public:
   ShowProductPage(std::vector<Entity::Product *> products);
   void execute() override;
