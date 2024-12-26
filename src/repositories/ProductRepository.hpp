@@ -11,6 +11,7 @@ public:
   virtual std::vector<Entity::Product *> getAll() = 0;
   virtual Entity::Product *getByCode(string code) = 0;
   virtual std::vector<Entity::Product *> getByName(string name) = 0;
+  virtual std::vector<Entity::Product *> getAllSortName(bool isAsc = true) = 0;
 
   virtual ~ProductRepository() {}
 };
