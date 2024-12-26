@@ -92,7 +92,8 @@ void ModernMenuRenderer::createTwoCol(int size, int leftSize,
   }
 }
 
-void ModernMenuRenderer::render(std::vector<Core::Page::PageItem *> pageItems) {
+void ModernMenuRenderer::render(
+    std::vector<std::shared_ptr<Core::Page::PageItem>> pageItems) {
   int size = 50;
   // cout << "╔═════════════════════════════════════╗" << endl;
   // cout << "║       MENU MANAJEMEN TOKO           ║" << endl;
