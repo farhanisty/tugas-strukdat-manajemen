@@ -10,7 +10,6 @@
 namespace Repositories {
 class ProductRepositoryFactory {
   static std::shared_ptr<ProductRepository> instance;
-  static std::mutex mutex;
 
   ProductRepositoryFactory() {}
 
