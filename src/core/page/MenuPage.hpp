@@ -13,6 +13,7 @@ namespace Core::Page {
 class MenuPage : public Page {
 private:
   bool isStop = false;
+  std::string exitLabel = "";
   std::string input = "";
   bool isConfigured = false;
   std::shared_ptr<Renderer::MenuRenderer> menuRenderer;
@@ -40,7 +41,9 @@ public:
   virtual void after();
 
   void addMenu(std::string label, std::shared_ptr<Page> page);
-  void execute();
+  void addExit(std::string exitLabel);
+
+  void execute() override;
   std::string getInput();
 
   virtual ~MenuPage() {}

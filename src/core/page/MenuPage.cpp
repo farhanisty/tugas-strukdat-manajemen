@@ -6,6 +6,7 @@
 #include "../renderer/BasicInputMenuRenderer.hpp"
 #include "../renderer/BasicMenuRenderer.hpp"
 #include "../renderer/MenuRenderer.hpp"
+#include "ExitPage.hpp"
 #include "string"
 #include <memory>
 
@@ -14,6 +15,7 @@ using Core::Input::InputBuilder, Core::Constraint::MustIntegerConstraint,
 
 MenuPage::MenuPage() {
   this->menuRenderer = std::make_shared<Renderer::BasicMenuRenderer>();
+  // this->exitLabel = "";
   // this->inputRenderer = new Renderer::BasicInputMenuRenderer();
 }
 
@@ -73,9 +75,18 @@ void Core::Page::MenuPage::execute() {
 
   int resultInput = stoi(input->getRawInput());
 
-  this->pageItems[resultInput - 1]->page->execute();
+  if (resultInput == this->pageItems.size()) {
+    this->setStop();
+  } else {
+    this->pageItems[resultInput - 1]->page->execute();
+  }
 
   this->after();
+}
+
+void MenuPage::addExit(std::string exitLabel) {
+  this->exitLabel = exitLabel;
+  this->addMenu(exitLabel, std::make_shared<ExitPage>());
 }
 
 std::string Core::Page::MenuPage::getInput() { return this->input; }
