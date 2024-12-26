@@ -20,7 +20,4 @@ void MainPage::configureMenu() {
   this->addMenu("exit", new Core::Page::ExitPage(this));
 }
 
-void MainPage::before() {
-  this->clearScreen();
-  std::cout << "hello world\n";
-}
+void MainPage::before() { this->clearScreen(); }
