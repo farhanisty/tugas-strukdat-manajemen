@@ -75,7 +75,7 @@ void Core::Page::MenuPage::execute() {
 
   int resultInput = stoi(input->getRawInput());
 
-  if (resultInput == this->pageItems.size()) {
+  if (resultInput == this->pageItems.size() && this->exitLabel != "") {
     this->setStop();
   } else {
     this->pageItems[resultInput - 1]->page->execute();
