@@ -4,7 +4,8 @@
 
 using Core::Renderer::BasicMenuRenderer;
 
-void BasicMenuRenderer::render(std::vector<Page::PageItem *> pageItems) {
+void BasicMenuRenderer::render(
+    std::vector<std::shared_ptr<Page::PageItem>> pageItems) {
   int i = 1;
 
   for (auto pageItem : pageItems) {

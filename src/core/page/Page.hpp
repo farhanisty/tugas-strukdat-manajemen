@@ -2,6 +2,7 @@
 #define Core_Page_HPP
 
 #include <iostream>
+#include <memory>
 
 namespace Core::Page {
 
@@ -10,10 +11,7 @@ public:
   virtual void execute() = 0;
   virtual ~Page() {}
 
-  void renderPageDirectly(Page *page) {
-    page->execute();
-    delete page;
-  }
+  void renderPageDirectly(std::shared_ptr<Page> page) { page->execute(); }
 
   void clearScreen() {
 #if __unix__

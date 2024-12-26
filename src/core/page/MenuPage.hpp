@@ -15,11 +15,11 @@ private:
   bool isStop = false;
   std::string input = "";
   bool isConfigured = false;
-  Renderer::MenuRenderer *menuRenderer;
+  std::shared_ptr<Renderer::MenuRenderer> menuRenderer;
   // Renderer::InputMenuRenderer *inputRenderer;
 
 protected:
-  std::vector<PageItem *> pageItems;
+  std::vector<std::shared_ptr<PageItem>> pageItems;
 
 public:
   MenuPage();
@@ -27,9 +27,9 @@ public:
   void setIsStop(bool isStop);
   void setStop();
 
-  void changeRenderer(Renderer::MenuRenderer *menuRenderer);
+  void changeRenderer(std::shared_ptr<Renderer::MenuRenderer> menuRenderer);
 
-  Renderer::MenuRenderer *getRenderer();
+  std::shared_ptr<Renderer::MenuRenderer> getRenderer();
 
   // void changeInputRenderer(Renderer::InputMenuRenderer *inputRenderer);
   //
@@ -39,11 +39,11 @@ public:
   virtual void before() {};
   virtual void after();
 
-  void addMenu(std::string label, Page *page);
+  void addMenu(std::string label, std::shared_ptr<Page> page);
   void execute();
   std::string getInput();
 
-  virtual ~MenuPage();
+  virtual ~MenuPage() {}
 };
 
 } // namespace Core::Page

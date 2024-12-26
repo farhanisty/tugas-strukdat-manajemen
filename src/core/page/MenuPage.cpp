@@ -7,12 +7,13 @@
 #include "../renderer/BasicMenuRenderer.hpp"
 #include "../renderer/MenuRenderer.hpp"
 #include "string"
+#include <memory>
 
 using Core::Input::InputBuilder, Core::Constraint::MustIntegerConstraint,
     Core::Page::MenuPage;
 
 MenuPage::MenuPage() {
-  this->menuRenderer = new Renderer::BasicMenuRenderer();
+  this->menuRenderer = std::make_shared<Renderer::BasicMenuRenderer>();
   // this->inputRenderer = new Renderer::BasicInputMenuRenderer();
 }
 
@@ -20,16 +21,18 @@ bool MenuPage::getIsStop() { return this->isStop; }
 void MenuPage::setIsStop(bool isStop) { this->isStop = isStop; }
 void MenuPage::setStop() { this->setIsStop(true); }
 
-void MenuPage::changeRenderer(Renderer::MenuRenderer *menuRenderer) {
+void MenuPage::changeRenderer(
+    std::shared_ptr<Renderer::MenuRenderer> menuRenderer) {
   this->menuRenderer = menuRenderer;
 }
 
-Core::Renderer::MenuRenderer *MenuPage::getRenderer() {
+std::shared_ptr<Core::Renderer::MenuRenderer> MenuPage::getRenderer() {
   return this->menuRenderer;
 }
 
-void Core::Page::MenuPage::addMenu(std::string label, Page *page) {
-  this->pageItems.push_back(new PageItem(label, page));
+void Core::Page::MenuPage::addMenu(std::string label,
+                                   std::shared_ptr<Page> page) {
+  this->pageItems.push_back(std::make_shared<PageItem>(label, page));
 }
 
 // void MenuPage::changeInputRenderer(Renderer::InputMenuRenderer
@@ -78,9 +81,3 @@ void Core::Page::MenuPage::execute() {
 std::string Core::Page::MenuPage::getInput() { return this->input; }
 
 void Core::Page::MenuPage::after() {}
-
-Core::Page::MenuPage::~MenuPage() {
-  for (auto p : this->pageItems) {
-    delete p;
-  }
-}

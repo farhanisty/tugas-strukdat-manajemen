@@ -8,7 +8,7 @@
 namespace Core::Renderer {
 class BasicMenuRenderer : public MenuRenderer {
 public:
-  void render(std::vector<Page::PageItem *> pageItems) override;
+  void render(std::vector<std::shared_ptr<Page::PageItem>> pageItems) override;
 };
 } // namespace Core::Renderer
 
