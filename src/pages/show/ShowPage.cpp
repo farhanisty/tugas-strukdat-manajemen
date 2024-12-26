@@ -18,16 +18,10 @@ void ShowPage::execute() {
 
   std::vector<Entity::Product *> products = productRepository->getAll();
 
-  Util::ShowProductPage *showProductPage = new Util::ShowProductPage(products);
+  std::shared_ptr<Util::ShowProductPage> showProductPage =
+      std::make_shared<Util::ShowProductPage>(products);
   this->renderPageDirectly(showProductPage);
 
-  AdvanceOptionShowPage *advanceOptionShowPage = new AdvanceOptionShowPage();
-  auto tempRenderer = advanceOptionShowPage->getRenderer();
-
-  delete tempRenderer;
-
-  advanceOptionShowPage->changeRenderer(
-      new Custom::Renderer::ModernMenuRenderer("OPSI LANJUTAN"));
-
+  auto advanceOptionShowPage = std::make_shared<AdvanceOptionShowPage>();
   this->renderPageDirectly(advanceOptionShowPage);
 }

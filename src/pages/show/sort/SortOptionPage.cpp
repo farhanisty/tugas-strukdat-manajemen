@@ -5,11 +5,9 @@
 using Pages::Show::Sort::SortOptionPage;
 
 void SortOptionPage::configureMenu() {
-  delete this->getRenderer();
+  this->changeRenderer(std::make_shared<Custom::Renderer::ModernMenuRenderer>(
+      "OPSI PENGURUTAN"));
 
-  this->changeRenderer(
-      new Custom::Renderer::ModernMenuRenderer("OPSI PENGURUTAN"));
-
-  this->addMenu("ASCENDING", new AscendingSortPage());
-  this->addMenu("DESCENDING", this);
+  this->addMenu("ASCENDING", std::make_shared<AscendingSortPage>());
+  this->addMenu("DESCENDING", std::make_shared<AscendingSortPage>());
 }
