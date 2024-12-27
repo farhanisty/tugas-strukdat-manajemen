@@ -9,6 +9,7 @@ namespace Repositories {
 class ProductRepositoryImpl : public ProductRepository {
   std::vector<Entity::Product *> products;
   std::unique_ptr<File::ProductFileHandler> productFileHandler;
+  std::unique_ptr<File::ProductFileHandler> removedProductFileHandler;
 
 public:
   ProductRepositoryImpl();
@@ -17,6 +18,7 @@ public:
   Entity::Product *getByCode(string code) override;
   std::vector<Entity::Product *> getByName(string name) override;
   std::vector<Entity::Product *> getAllSortName(bool isAsc = true) override;
+  bool remove(string code) override;
 };
 } // namespace Repositories
 

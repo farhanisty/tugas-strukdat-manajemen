@@ -7,6 +7,9 @@ using Repositories::ProductRepositoryImpl;
 ProductRepositoryImpl::ProductRepositoryImpl() {
   this->productFileHandler =
       std::make_unique<File::ProductFileHandler>("data.csv");
+  this->removedProductFileHandler =
+      std::make_unique<File::ProductFileHandler>("remove.csv");
+
   this->products = this->productFileHandler->get();
 }
 
@@ -43,4 +46,29 @@ ProductRepositoryImpl::getAllSortName(bool isAsc) {
   }
 
   return this->products;
+}
+
+bool ProductRepositoryImpl::remove(string code) {
+  Entity::Product *product = this->getByCode(code);
+
+  if (product != nullptr) {
+    int index = 0;
+
+    int counter = 0;
+    for (auto product : this->getAll()) {
+      if (product->code == code) {
+        break;
+      }
+      counter++;
+    }
+
+    this->removedProductFileHandler->create(product);
+    this->productFileHandler->remove(code);
+
+    this->products.erase(this->products.begin() + index);
+
+    return true;
+  } else {
+    return false;
+  }
 }
