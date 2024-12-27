@@ -2,6 +2,7 @@
 #include "../../core/input/Input.hpp"
 #include "../../core/input/InputBuilder.hpp"
 #include "../../custom/constraint/MustNumericConstraint.hpp"
+#include "../../custom/constraint/MustUniqueCodeProductConstraint.hpp"
 #include "../../entity/Product.hpp"
 #include "../../repositories/ProductRepositoryFactory.hpp"
 #include "../util/PausePage.hpp"
@@ -26,7 +27,11 @@ void InsertPage::execute() {
   cout << "║                                    ║" << endl;
   cout << "╚════════════════════════════════════╝" << endl;
 
-  Input *inputCode = inputBuilder.setPrefix("\nInput Code Produk\t: ")->build();
+  Input *inputCode =
+      inputBuilder.setPrefix("\nInput Code Produk\t: ")
+          ->setConstraint(
+              new Custom::Constraint::MustUniqueCodeProductConstraint())
+          ->build();
   inputBuilder.fresh();
   Input *inputName = inputBuilder.setPrefix("Input Nama Produk\t: ")->build();
   inputBuilder.fresh();
@@ -35,12 +40,18 @@ void InsertPage::execute() {
                           ->build();
 
   inputCode->execute();
+
+  while (!inputCode->isValid()) {
+    cout << inputCode->getErrorBag()->getErrors()[0] << "\n";
+    inputCode->execute();
+  }
+
   inputName->execute(true);
 
   inputPrice->execute();
 
   while (!inputPrice->isValid()) {
-    cout << inputPrice->getErrorBag()->getErrors()[0] << "\n";
+    cout << "[Error] " << inputPrice->getErrorBag()->getErrors()[0];
     inputPrice->execute();
   }
 
