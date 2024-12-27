@@ -10,7 +10,7 @@ ProductFileHandler::ProductFileHandler(std::string filename)
     : filename(filename) {}
 
 void ProductFileHandler::overwriteFile(const std::vector<Product *> products) {
-  std::ofstream file("data.csv", std::ios::trunc); // Mode truncate
+  std::ofstream file(this->filename, std::ios::trunc); // Mode truncate
   if (file.is_open()) {
     for (const auto &product : products) {
       file << product->code << "," << product->name << "," << product->price
@@ -23,7 +23,7 @@ void ProductFileHandler::overwriteFile(const std::vector<Product *> products) {
 }
 
 bool ProductFileHandler::create(const Product *product) {
-  std::ofstream file("data.csv", std::ios::app); // Mode append
+  std::ofstream file(this->filename, std::ios::app); // Mode append
   if (file.is_open()) {
     file << product->code << "," << product->name << "," << product->price
          << "\n";
@@ -37,7 +37,7 @@ bool ProductFileHandler::create(const Product *product) {
 
 std::vector<Product *> ProductFileHandler::get() {
   std::vector<Product *> products;
-  std::ifstream file("data.csv");
+  std::ifstream file(this->filename);
   if (file.is_open()) {
     std::string line;
     while (std::getline(file, line)) {
@@ -78,24 +78,24 @@ std::vector<Product *> ProductFileHandler::get() {
 // }
 //
 // // Delete: Hapus produk berdasarkan kode
-// void ProductFileHandler::remove(const std::string code) {
-//   std::vector<Product *> products = get();
-//   bool found = false;
-//
-//   products.erase(std::remove_if(products.begin(), products.end(),
-//                                 [&found, &code](const Product &product) {
-//                                   if (product.code == code) {
-//                                     found = true;
-//                                     return true;
-//                                   }
-//                                   return false;
-//                                 }),
-//                  products.end());
-//
-//   if (found) {
-//     overwriteFile(products);
-//     std::cout << "Product deleted successfully.\n";
-//   } else {
-//     std::cerr << "Product not found.\n";
-//   }
-// }
+bool ProductFileHandler::remove(const std::string code) {
+  std::vector<Product *> products = get();
+  bool found = false;
+
+  products.erase(std::remove_if(products.begin(), products.end(),
+                                [&found, &code](const Product *product) {
+                                  if (product->code == code) {
+                                    found = true;
+                                    return true;
+                                  }
+                                  return false;
+                                }),
+                 products.end());
+
+  if (found) {
+    overwriteFile(products);
+    return true;
+  } else {
+    return false;
+  }
+}

@@ -21,7 +21,7 @@ public:
 
   // void update(const std::string code, Product *updatedProduct);
   //
-  // void remove(const std::string code);
+  bool remove(const std::string code);
 };
 } // namespace File
 
