@@ -9,8 +9,7 @@ class ExitPage : public Page {
   MenuPage *page;
 
 public:
-  ExitPage(MenuPage *page) : page(page) {}
-  void execute() override { page->setStop(); }
+  void execute() override {}
 };
 } // namespace Core::Page
 

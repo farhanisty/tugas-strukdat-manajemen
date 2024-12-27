@@ -6,13 +6,16 @@
 #include "../renderer/BasicInputMenuRenderer.hpp"
 #include "../renderer/BasicMenuRenderer.hpp"
 #include "../renderer/MenuRenderer.hpp"
+#include "ExitPage.hpp"
 #include "string"
+#include <memory>
 
 using Core::Input::InputBuilder, Core::Constraint::MustIntegerConstraint,
     Core::Page::MenuPage;
 
 MenuPage::MenuPage() {
-  this->menuRenderer = new Renderer::BasicMenuRenderer();
+  this->menuRenderer = std::make_shared<Renderer::BasicMenuRenderer>();
+  // this->exitLabel = "";
   // this->inputRenderer = new Renderer::BasicInputMenuRenderer();
 }
 
@@ -20,16 +23,18 @@ bool MenuPage::getIsStop() { return this->isStop; }
 void MenuPage::setIsStop(bool isStop) { this->isStop = isStop; }
 void MenuPage::setStop() { this->setIsStop(true); }
 
-void MenuPage::changeRenderer(Renderer::MenuRenderer *menuRenderer) {
+void MenuPage::changeRenderer(
+    std::shared_ptr<Renderer::MenuRenderer> menuRenderer) {
   this->menuRenderer = menuRenderer;
 }
 
-Core::Renderer::MenuRenderer *MenuPage::getRenderer() {
+std::shared_ptr<Core::Renderer::MenuRenderer> MenuPage::getRenderer() {
   return this->menuRenderer;
 }
 
-void Core::Page::MenuPage::addMenu(std::string label, Page *page) {
-  this->pageItems.push_back(new PageItem(label, page));
+void Core::Page::MenuPage::addMenu(std::string label,
+                                   std::shared_ptr<Page> page) {
+  this->pageItems.push_back(std::make_shared<PageItem>(label, page));
 }
 
 // void MenuPage::changeInputRenderer(Renderer::InputMenuRenderer
@@ -70,17 +75,20 @@ void Core::Page::MenuPage::execute() {
 
   int resultInput = stoi(input->getRawInput());
 
-  this->pageItems[resultInput - 1]->page->execute();
+  if (resultInput == this->pageItems.size() && this->exitLabel != "") {
+    this->setStop();
+  } else {
+    this->pageItems[resultInput - 1]->page->execute();
+  }
 
   this->after();
+}
+
+void MenuPage::addExit(std::string exitLabel) {
+  this->exitLabel = exitLabel;
+  this->addMenu(exitLabel, std::make_shared<ExitPage>());
 }
 
 std::string Core::Page::MenuPage::getInput() { return this->input; }
 
 void Core::Page::MenuPage::after() {}
-
-Core::Page::MenuPage::~MenuPage() {
-  for (auto p : this->pageItems) {
-    delete p;
-  }
-}

@@ -3,6 +3,7 @@
 
 #include "../../core/page/PageItem.hpp"
 #include "../../core/renderer/MenuRenderer.hpp"
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -22,7 +23,8 @@ class ModernMenuRenderer : public Core::Renderer::MenuRenderer {
 
 public:
   ModernMenuRenderer(std::string header);
-  void render(std::vector<Core::Page::PageItem *> pageItems) override;
+  void
+  render(std::vector<std::shared_ptr<Core::Page::PageItem>> pageItems) override;
 };
 } // namespace Custom::Renderer
 

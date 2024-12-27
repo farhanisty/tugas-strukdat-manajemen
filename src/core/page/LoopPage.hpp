@@ -7,10 +7,10 @@
 
 namespace Core::Page {
 class LoopPage : public Page {
-  MenuPage *page = nullptr;
+  std::shared_ptr<MenuPage> page = nullptr;
 
 public:
-  LoopPage(MenuPage *page);
+  LoopPage(std::shared_ptr<MenuPage> page);
   void execute();
 };
 } // namespace Core::Page

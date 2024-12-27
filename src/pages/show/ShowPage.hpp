@@ -5,10 +5,9 @@
 #include "../../core/page/Page.hpp"
 
 namespace Pages::Show {
-class ShowPage : public Core::Page::MenuPage {
+class ShowPage : public Core::Page::Page {
 public:
-  void configureMenu() override;
-  void before() override;
+  void execute() override;
 };
 } // namespace Pages::Show
 

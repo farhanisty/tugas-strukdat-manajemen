@@ -7,7 +7,8 @@
 namespace Core::Renderer {
 class MenuRenderer {
 public:
-  virtual void render(std::vector<Page::PageItem *> pageItems) = 0;
+  virtual void
+  render(std::vector<std::shared_ptr<Page::PageItem>> pageItems) = 0;
   virtual ~MenuRenderer() {}
 };
 } // namespace Core::Renderer

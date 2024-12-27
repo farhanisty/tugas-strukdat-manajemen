@@ -1,26 +1,21 @@
 #include "MainPage.hpp"
 #include "../core/page/ExitPage.hpp"
 #include "../custom/renderer/ModernMenuRenderer.hpp"
+#include "history/HistoryPage.hpp"
 #include "insert/InsertPage.hpp"
+// #include "insert/InsertPage.hpp"
+#include "remove/RemovePage.hpp"
 #include "show/ShowPage.hpp"
+#include <memory>
 
 using Pages::MainPage;
 
 void MainPage::configureMenu() {
-  Pages::Show::ShowPage *showPage = new Show::ShowPage();
-  auto tempRenderer = showPage->getRenderer();
-
-  showPage->changeRenderer(
-      new Custom::Renderer::ModernMenuRenderer("OPSI LANJUT"));
-
-  this->addMenu("Input Produk", new Pages::Insert::InsertPage());
-  this->addMenu("Tampil Produk", showPage);
-  this->addMenu("Hapus Produk", new Pages::Show::ShowPage());
-  this->addMenu("History", new Pages::Show::ShowPage());
-  this->addMenu("exit", new Core::Page::ExitPage(this));
+  this->addMenu("Input Produk", std::make_shared<Insert::InsertPage>());
+  this->addMenu("Tampil Produk", std::make_shared<Show::ShowPage>());
+  this->addMenu("Hapus Produk", std::make_shared<Remove::RemovePage>());
+  this->addMenu("History", std::make_shared<History::HistoryPage>());
+  this->addExit("exit");
 }
 
-void MainPage::before() {
-  this->clearScreen();
-  std::cout << "hello world\n";
-}
+void MainPage::before() { this->clearScreen(); }

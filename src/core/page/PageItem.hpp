@@ -3,15 +3,16 @@
 
 #include "Page.hpp"
 #include "string"
+#include <memory>
 
 namespace Core::Page {
 
 class PageItem {
 public:
   std::string label;
-  Page *page;
-  PageItem(std::string label, Page *page) : label(label), page(page) {}
-  virtual ~PageItem() { delete this->page; }
+  std::shared_ptr<Page> page;
+  PageItem(std::string label, std::shared_ptr<Page> page)
+      : label(label), page(page) {}
 };
 } // namespace Core::Page
 

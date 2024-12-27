@@ -1,22 +1,18 @@
 #include "core/page/LoopPage.hpp"
 #include "custom/renderer/ModernMenuRenderer.hpp"
 #include "pages/MainPage.hpp"
+#include <memory>
 
 int main() {
-  Pages::MainPage *mainPage = new Pages::MainPage();
-  auto basicRenderer = mainPage->getRenderer();
+  std::shared_ptr<Pages::MainPage> mainPage =
+      std::make_shared<Pages::MainPage>();
 
-  Custom::Renderer::ModernMenuRenderer *modernMenuRenderer =
-      new Custom::Renderer::ModernMenuRenderer("MENU MANAJEMEN TOKO");
+  mainPage->changeRenderer(
+      std::make_shared<Custom::Renderer::ModernMenuRenderer>(
+          "MENU MANAJEMEN TOKO"));
 
-  delete basicRenderer;
-
-  mainPage->changeRenderer(modernMenuRenderer);
-
-  Core::Page::LoopPage *loopPage = new Core::Page::LoopPage(mainPage);
+  std::shared_ptr<Core::Page::LoopPage> loopPage =
+      std::make_shared<Core::Page::LoopPage>(mainPage);
 
   loopPage->execute();
-
-  delete loopPage;
-  return 0;
 }
