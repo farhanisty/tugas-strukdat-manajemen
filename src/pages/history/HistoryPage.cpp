@@ -5,7 +5,6 @@
 using Pages::History::HistoryPage;
 
 void HistoryPage::configureMenu() {
-  this->clearScreen();
   this->changeRenderer(
       std::make_shared<Custom::Renderer::ModernMenuRenderer>("HISTORY"));
   this->addMenu("IN ORDER", std::make_shared<HistoryPage>());
@@ -13,3 +12,5 @@ void HistoryPage::configureMenu() {
   this->addMenu("PRE ORDER", std::make_shared<HistoryPage>());
   this->addExit("Kembali");
 }
+
+void HistoryPage::before() { this->clearScreen(); }

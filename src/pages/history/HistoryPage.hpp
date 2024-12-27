@@ -7,6 +7,7 @@ namespace Pages::History {
 class HistoryPage : public Core::Page::MenuPage {
 public:
   void configureMenu() override;
+  void before() override;
 };
 } // namespace Pages::History
 
