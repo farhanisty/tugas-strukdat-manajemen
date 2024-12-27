@@ -1,14 +1,15 @@
 #include "FilterMainPage.hpp"
 #include "../../../custom/renderer/ModernMenuRenderer.hpp"
+#include "FilterCodePage.hpp"
+#include <memory>
 
 using Pages::Show::Filter::FilterMainPage;
 
 void FilterMainPage::configureMenu() {
-  delete this->getRenderer();
-  Custom::Renderer::ModernMenuRenderer *modernMenuRenderer =
-      new Custom::Renderer::ModernMenuRenderer("OPSI FILTER");
+  auto modernMenuRenderer =
+      std::make_shared<Custom::Renderer::ModernMenuRenderer>("OPSI FILTER");
 
   this->changeRenderer(modernMenuRenderer);
-  this->addMenu("BERDASARKAN KODE", this);
-  this->addMenu("BERDASARKAN NAMA", this);
+  this->addMenu("BERDASARKAN KODE", std::make_shared<FilterCodePage>());
+  this->addMenu("BERDASARKAN NAMA", std::make_shared<FilterCodePage>());
 }
