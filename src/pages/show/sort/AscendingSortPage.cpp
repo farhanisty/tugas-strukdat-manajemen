@@ -15,7 +15,7 @@ void AscendingSortPage::execute() {
   auto productRepository =
       Repositories::ProductRepositoryFactory::getInstance();
 
-  std::vector<Entity::Product *> products = productRepository->getAll();
+  std::vector<Entity::Product *> products = productRepository->getAllSortName();
 
   auto showProductPage = std::make_shared<Util::ShowProductPage>(products);
   this->renderPageDirectly(showProductPage);
