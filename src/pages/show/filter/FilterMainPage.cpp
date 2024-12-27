@@ -1,6 +1,7 @@
 #include "FilterMainPage.hpp"
 #include "../../../custom/renderer/ModernMenuRenderer.hpp"
 #include "FilterCodePage.hpp"
+#include "FilterNamePage.hpp"
 #include <memory>
 
 using Pages::Show::Filter::FilterMainPage;
@@ -11,5 +12,5 @@ void FilterMainPage::configureMenu() {
 
   this->changeRenderer(modernMenuRenderer);
   this->addMenu("BERDASARKAN KODE", std::make_shared<FilterCodePage>());
-  this->addMenu("BERDASARKAN NAMA", std::make_shared<FilterCodePage>());
+  this->addMenu("BERDASARKAN NAMA", std::make_shared<FilterNamePage>());
 }
