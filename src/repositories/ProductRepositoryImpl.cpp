@@ -21,7 +21,16 @@ std::vector<Entity::Product *> ProductRepositoryImpl::getAll() {
 }
 
 Entity::Product *ProductRepositoryImpl::getByCode(string code) {
-  return nullptr;
+  Entity::Product *productFound = nullptr;
+
+  for (auto product : this->getAll()) {
+    if (product->code == code) {
+      productFound = product;
+      break;
+    }
+  }
+
+  return productFound;
 }
 std::vector<Entity::Product *> ProductRepositoryImpl::getByName(string name) {
   return this->products;
